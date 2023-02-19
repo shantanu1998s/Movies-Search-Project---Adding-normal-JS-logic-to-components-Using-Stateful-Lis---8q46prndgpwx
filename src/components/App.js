@@ -4,12 +4,22 @@ import { movies } from "../utils/movieList";
 
 const App = () => {
     const [inputValue, setInputValue] = useState("");
-    const [results, setResult] = useState(null);
-
-    function handleClick(e) {}
-
-    function handleChange(e) {}
-
+    const [results, setResult] = useState([]);
+    const arr=[];
+    async function handleClick(e) {
+        e.preventDefault();
+        arr.length=0;
+        for(let elem of movies){
+            if(inputValue.trim().toLocaleLowerCase()==elem.title.toLocaleLowerCase()){
+                arr.push(elem);
+            }
+        }
+        setInputValue('');
+        setResult(arr);
+    }
+    function handleChange(e) {
+        setInputValue(e.target.value);
+    }
     return (
         <div id="main">
             <form id="form">
@@ -24,9 +34,8 @@ const App = () => {
                 </button>
             </form>
             <div id="result">
-                {results &&
-                    results.map((movie) => (
-                        <div className="movie">{movie}</div>
+                {results.map((movie) => (
+                        <div key={movie.id} className="movie">{movie.title}</div>
                     ))}
             </div>
         </div>
